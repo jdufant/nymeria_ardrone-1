@@ -30,13 +30,13 @@ void loop()
 
   // convert the time into a distance
   cm = microsecondsToCentimeters(duration);
+  // cast distance into a string
   String dist = String(cm);
-
   // send distance
   bytesSent = Serial.print(dist);
-
-  // add separator
+  // send separator
   Serial.print('x');
+
   delay(10);
 }
 
