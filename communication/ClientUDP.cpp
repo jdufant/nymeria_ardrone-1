@@ -5,10 +5,13 @@ int main()
 {
 	char message[10];
 	int nb_char;
-	UDPClient client("127.0.0.1", 7777);
+
+	// UDP port (7777) is synchronized with server's one
+	UDPClient client("127.0.0.1", 7777); 
 	
-	printf("test2\n");
-	while(client.send("go", 2) <=0);
+	// first client request
+	while(client.send("go", 2) <= 0);
+
 	while (1)
 	{
 		nb_char = client.recv(message, 10);
@@ -16,6 +19,6 @@ int main()
 		{
 			message[0] = 128;
 		}		
-		printf("recu : %d-\n", message[0]);
+		printf("received : %d-\n", message[0]);
 	}
 }

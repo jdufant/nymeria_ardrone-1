@@ -1,12 +1,8 @@
 #include "UDPWrapper.h"
 
 #include <stdio.h>   /* Standard input/output definitions */
-//#include <signal.h>   /* Standard signals definitions */
-//#include <string.h>  /* String function definitions */
-//#include <unistd.h>  /* UNIX standard function definitions */
 #include <errno.h>   /* Error number definitions */
 #include <stdlib.h>
-//#include <stdint.h>
 
 
 #define BUFFER_SIZE 8
@@ -15,7 +11,7 @@
 
 int main()
 {
-  int cpt_boucle = 0;
+  int cpt_loop = 0;
   int timeoutCnt = 0;
   int pgExit = 0;
 
@@ -34,15 +30,13 @@ int main()
 	
 	printf("connected\n");
 	
-	while (cpt_boucle < 500 && pgExit == 0) {
+	while (cpt_loop < 500 && pgExit == 0) {
 
-		printf("test %d\n", cpt_boucle);
-	  	sprintf(sendBuffer, "%d", cpt_boucle);
+		printf("test %d\n", cpt_loop);
+	  	sprintf(sendBuffer, "%d", cpt_loop);
 	  	bsent = server.send(sendBuffer, 4);
-	  	cpt_boucle ++;
-	  	
-	  	//printf("char = %d\n", server.recv(readBuffer, BUFFER_SIZE));
-	  	
+	  	cpt_loop ++;
+	  		  	
 	  	try {
 	  		server.recv(readBuffer, BUFFER_SIZE);
 	  	}

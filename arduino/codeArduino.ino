@@ -32,7 +32,10 @@ void loop()
   cm = microsecondsToCentimeters(duration);
   String dist = String(cm);
 
+  // send distance
   bytesSent = Serial.print(dist);
+
+  // add separator
   Serial.print('x');
   delay(10);
 }

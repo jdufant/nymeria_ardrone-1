@@ -23,8 +23,8 @@
 int traitTab(int* tab, int size);
 
 /**
-* Reads the buffer char by char to detect a specific delimitation char
-* this delimitation char and all char after it are replaced by the null char in the read buffer
+* Reads the buffer char by char to detect a specific delimitation char.
+* This delimitation char and all char after it are replaced by the null char in the read buffer.
 * \param[in] fd file descriptor
 * \param[in, out] buf read buffer
 * \param[in] until delimitation char
@@ -32,29 +32,29 @@ int traitTab(int* tab, int size);
 */
 int serialport_read_until(int fd, char* buf, char until)
 {
-    char b[1];
-    int i=0; int n=0; int chread=0;
-    
-    do { 
-        n = read(fd, b, 1);  // read a char at a time
-        if( n==-1) return -1;    // couldn't read
-        if( n==0 ) {
-	  		usleep(1000); // wait 1 msec, then try again
-	  		continue;
-        }
-        buf[i] = b[0]; 
+	char b[1];
+	int i=0; int n=0; int chread=0;
+
+	do { 
+		n = read(fd, b, 1);  // read a char at a time
+		if( n==-1) return -1; // couldn't read
+		if( n==0 ) {
+			usleep(1000); // wait 1 msec, then try again
+			continue;
+		}
+		buf[i] = b[0]; 
 		i++;
 
-    } while( b[0] != until);
-    
-    chread = i-1;
+	}
+	while( b[0] != until);
 
-    for (int j = (i-1); i < BUFFER_SIZE; i++)
-      {
-	buf[j] = '\0';  // null char for the rest of the buffer
-      }
+	chread = i-1;
 
-    return chread;
+	for (int j = (i-1); i < BUFFER_SIZE; i++){
+		buf[j] = '\0';  // null char for the rest of the buffer
+	}
+
+	return chread;
 }
 
 /**
@@ -74,7 +74,6 @@ void setSerialOptions( struct termios& options)
 	    options.c_cflag &= ~PARENB;
 	    options.c_cflag &= ~CSTOPB;
 	    // Disable Hardware flowcontrol
-	    //options.c_cflag &= ~CNEW_RTSCTS;  //-- not supported
 	    // Enable Raw Input
 	    options.c_lflag &= ~(ICANON | ECHO | ECHOE | ISIG);
 	    // Disable Software Flow control
@@ -82,26 +81,25 @@ void setSerialOptions( struct termios& options)
     }
 
 
-int main()
-{
-  std::stringstream ss;
-  std::string tmpStr;
-  int cpt_tab = 0;
-  int cpt_boucle = 0;
+int main(){
+	std::stringstream ss;
+	std::string tmpStr;
+	int cpt_tab = 0;
+	int cpt_boucle = 0;
 
-  int bsent, chread;
-  int fd, sockfd; /* File descriptor for the port */
+	int bsent, chread;
+	int fd, sockfd; /* File descriptor for the port */
 
-  int tabVal[NB_VAL];
-  char readBuffer[BUFFER_SIZE];
-  char sendBuffer[4];
-  int value, tmp_value = 0;
+	int tabVal[NB_VAL];
+	char readBuffer[BUFFER_SIZE];
+	char sendBuffer[4];
+	int value, tmp_value = 0;
 
-  struct termios options;
+	struct termios options;
 
-  /*Open serial port
-    try to open ttyUSB0 first. If failed, try to open ttyUSB1
-  */
+	/*Open serial port
+	try to open ttyUSB0 first. If failed, try to open ttyUSB1
+	*/
 	fd = open("/dev/ttyUSB0", O_RDONLY | O_NOCTTY | O_NDELAY);
 
 	if (fd == -1) {
@@ -142,13 +140,11 @@ int main()
 	while (1) {
 
 		// Read from the serial port
-		// TODO : check response time (maybe with baud rate) and read() returned value is 0 for EOF
 		chread = serialport_read_until(fd, readBuffer, 'x');
 		  
 		if (chread > 0) {
 
 		    if((tabVal[cpt_tab] = atoi(readBuffer)) < 380){
-		      //printf("recu : %s\n", readBuffer);
 		      cpt_tab ++;
 		    }
 
@@ -166,15 +162,6 @@ int main()
 
 		}	
 
-	  	/*try {
-	  		server.recv(readBuffer, BUFFER_SIZE);
-	  	}
-
-	  	catch (const std::exception & ex) {
-	  		printf(ex.what());
-		break;
-	  	}*/
-
 	} //end while
 	
 	printf("Closed\n");
@@ -182,38 +169,31 @@ int main()
 	close(fd);
 }
 /**
-* Filtering the value of an array
-*
+* Filtering the value of an array.
 */
 int traitTab(int* tab, int size)
 {
-  int total = 0;
-  int meanVal = 0;
-  const int ecart = 20;
+	int total = 0;
+	int meanVal = 0;
+	const int ecart = 20;
 
-  for(int i =0; i < size; i++) {
-    //printf("tab = %d\n", tab[i]);
-    total += tab[i];
-  }
+	for(int i =0; i < size; i++) {
+		total += tab[i];
+	}
 
-  meanVal = total/size;
-  //printf("meanVal intermédiaire = %d\n", meanVal);
+	meanVal = total/size;
 
-  for(int i =0; i < size; i++){
-    if (abs(tab[i] - meanVal) > traitMargin){
-      for (int j = i; j < size-1; j++)
-	tab[j] = tab[j+1];
-      size--;
-    }
-  }
+	for(int i =0; i < size; i++){
+		if (abs(tab[i] - meanVal) > traitMargin){
+			for (int j = i; j < size-1; j++)
+				tab[j] = tab[j+1];
+			size--;
+		}
+	}
 
-  total = 0;
-  for(int i =0; i < size; i++) {
-    total += tab[i];
-    //printf("tab[%d] = %d\n", i, tab[i]);
-  }
-
-  //printf("total = %d\nsize = %d\n", total, size);
-  
-  return (int)total/size;
+	total = 0;
+	for(int i =0; i < size; i++) {
+		total += tab[i];
+	}  
+	return (int)total/size;
 }
