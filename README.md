@@ -179,8 +179,3 @@ bsent = server.send(sendBuffer, 4);
 ~~~~~~~~~~~~~
 
 By default the UDP port is 7777. If you would like to change it, do not forget to make the update in the NymeriaCheckObstacle too.
-
-On the other
-
-
-
