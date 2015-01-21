@@ -40,7 +40,6 @@ NymeriaTest::NymeriaTest(){}
  **/
 void NymeriaTest::loop(ros::NodeHandle * n){
 
-	// TODO augment it to argument
 	int rate = 50;
 	int errorCode;
 	int lastErrorCode = 0;
@@ -65,7 +64,7 @@ void NymeriaTest::loop(ros::NodeHandle * n){
 	
 
 	std::fstream myfile;
-	myfile.open("/home/grm/catkin_ws/src/nymeria_ardrone/test/test.txt", std::fstream::in );
+	myfile.open("./test.txt", std::fstream::in );
 	std::string line;
 
 	if (myfile.good()){
@@ -116,7 +115,7 @@ void NymeriaTest::loop(ros::NodeHandle * n){
 	}
 	
 	//Land
-	n->setParam("nymeriaCommand", 11);
+	// n->setParam("nymeriaCommand", 11);
 	
 	myfile.close();
 }

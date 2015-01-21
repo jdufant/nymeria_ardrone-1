@@ -32,7 +32,7 @@ Nymeria::Nymeria(ros::NodeHandle * n){
 	maxLinearSpeed = 1.0;
 	maxAngularSpeed = 1.0;
 	linearSpeed = 0.08;
-	angularSpeed = 0.4;
+	angularSpeed = 0.5;
 	lastCmd = NymeriaConstants::INIT;
 
 	/* Initialize move_msg. */
@@ -49,9 +49,6 @@ Nymeria::Nymeria(ros::NodeHandle * n){
 
 	/* Initialize publishers. */
 	init_publishers();
-
-	//sub_navdata = nh->subscribe("/ardrone/navdata", 10, stateDroneCallback);
-
 };
 
 /**
@@ -270,7 +267,6 @@ void Nymeria::setSecurityDist(double secDist){
 
 	} catch(NymeriaExceptions& error){
 		/* Display error message. */
-		// TODO: wrap as ROS msg
 		fprintf(stderr, "%s", error.what());
 	}
 }
@@ -425,7 +421,7 @@ void Nymeria::init_publishers(){
  * @return read parameter value, -1 if no parameter is found.
  */
 double Nymeria::getParameter(char * str){
-	double param = 1.0; // TODO: don't think, this'll work
+	double param = 1.0;
 	try{
 		if(nh->getParam(str , param)){}
 		else
@@ -433,7 +429,6 @@ double Nymeria::getParameter(char * str){
 
 	} catch(NymeriaExceptions& error){
 		/* Display error message. */
-		// TODO: wrap as ROS msg
 		fprintf(stderr, "%s", error.what());
 	}
 	return param;
@@ -642,7 +637,7 @@ int Nymeria::triggerAction(int cmd, double factor){
 		break;
 
 	default:
-		ROS_WARN("Command unknown\n"); // TODO: warning, no further reaction?
+		ROS_WARN("Command unknown\n");
 		break;
 	}
 

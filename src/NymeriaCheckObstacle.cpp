@@ -96,15 +96,11 @@ void NymeriaCheckObstacle::inputCurFrontDist(int cfd){
 
 	} catch(NymeriaExceptions& error){
 		/* Display error message. */
-		// TODO: wrap as ROS msg
 		fprintf(stderr, "%s", error.what());
 	}
 
-	// TODO call back
-
 	ros::spinOnce();
 	regulation(pitch, 0.1);
-	//regulation()
 }
 
 /**
@@ -155,7 +151,6 @@ void NymeriaCheckObstacle::setSecurityDist(double secDist){
 
 	} catch(NymeriaExceptions& error){
 		/* Display error message. */
-		// TODO: wrap as ROS msg
 		fprintf(stderr, "%s", error.what());
 	}
 }
@@ -171,7 +166,7 @@ void NymeriaCheckObstacle::regulation (double estimatedAngle, double userCmd){
 
 	double tmp_Dist_To_Obstacle(0.0);
 	double tmp_SecurityDist(0.0);
-	double cmd(0.0);					//speed factor after regulation
+	double cmd(0.0); //speed factor after regulation
 	double estimatedCmd(0.0);
 	double lastError(0.0);
 
@@ -187,20 +182,13 @@ void NymeriaCheckObstacle::regulation (double estimatedAngle, double userCmd){
 	lastError = error;
 	error = cmd - estimatedCmd;
 
-	///// TODO mutex + try catch /////
-	//NymeriaMutexObstacle::lock();
 	if(nh->hasParam("/nymeriaFactor")){
 
 	  	cmd = PID(lastError, cmd); // get the regulated command 
 	  
-	  	//tmpSpeedCmd = saturationPente(tmpSpeedCmd);
-	  	//saturationCommande(tmpSpeedCmd);
-
 		nh->setParam("nymeriaFactor", cmd);
 		printf("[NymeriaCheckObstacle::regulation] Cmd régulée = %f\n", cmd);
 	}
-		//else throw NymeriaParamExc();
-	//NymeriaMutexObstacle::unlock();
 }
 
 

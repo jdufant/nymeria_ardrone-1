@@ -28,9 +28,9 @@ Navigate to your catkin_workspace sources repository.
 > $ cd ~/catkin_ws/src
 
 Download the nymeria_ardrone package using the following command in a terminal.
-> $ git clone https://github.com/jdufant/nymeria_ardrone
+> $ git clone https://github.com/ProjectNymeria/nymeria_ardrone
 
-You might prefer to reach [nymeria_ardrone webpage](https://github.com/jdufant/nymeria_ardrone) and download and unpack the nymeria_ardrone package.
+You might prefer to reach [nymeria_ardrone webpage](https://github.com/ProjectNymeria/nymeria_ardrone) and download and unpack the nymeria_ardrone package.
 
 Go back to your root workspace repository.
 > $ cd ~/catkin_ws

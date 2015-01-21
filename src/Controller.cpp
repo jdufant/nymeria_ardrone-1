@@ -34,7 +34,6 @@ int main(int argc, char **argv)
  * obstacle detection and avoidance.
  **/
 void Controller::loop(ros::NodeHandle * n){
-	// TODO augmente it to argument
 	int rate = 50;
 	int errorCode;
 	int lastErrorCode = 0;

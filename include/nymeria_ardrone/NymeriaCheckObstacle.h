@@ -39,7 +39,6 @@ class NymeriaCheckObstacle
 		double saturationPente(const double lastCmd, const double param_saturation, double& currentCmd);
 
 		void saturationCommande(double& cmd);
-		// TODO exc
 };
 
 #endif
